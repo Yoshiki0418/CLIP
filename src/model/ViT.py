@@ -23,7 +23,7 @@ class ViT_B32(nn.Module):
 
         self.patch_embed = Patch_Embedding(img_size, patch_size, embed_dim)
         self.cls_tokens = Extra_learnable_Embedding(embed_dim)
-        self.pos_emb = Positional_Embedding(seq_len=num_patches+1, d_model=embed_dim)
+        self.pos_emb = Positional_Embedding(seq_len=num_patches+1, emb_dim=embed_dim)
 
         self.encoder = nn.ModuleList([
             Transformer_Encoder_Block(embed_dim, num_heads, dim_head) for _ in range(num_layers)

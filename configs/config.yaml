@@ -1,5 +1,5 @@
 datasets:
-  artifact_dir: flickr8k/
+  artifact_dir: /content/flickr8k
   dataset_name: flickr8k
   val_split: 0.2
   tokenizer_alias: bert-base-uncased

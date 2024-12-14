@@ -43,7 +43,7 @@ class Positional_Embedding(nn.Module):
     def __init__(
         self,
         seq_len: int,
-        emb_dim: int
+        emb_dim: int,
     ) -> None:
         """
         Args:
