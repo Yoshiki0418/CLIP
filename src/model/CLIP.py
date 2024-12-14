@@ -93,9 +93,9 @@ class CLIP_Module(nn.Module):
     
 # 損失関数（例: コサイン類似度に基づくコントラスト損失）
 class ContrastiveLoss(nn.Module):
-    def __init__(self, initial_temperature=0.07):
+    def __init__(self, temperature=0.07):
         super().__init__()
-        self.temperature = nn.Parameter(torch.tensor(initial_temperature))
+        self.temperature = nn.Parameter(torch.tensor(temperature))
 
     def forward(self, img_features, text_features):
         # L2ノルム正規化
