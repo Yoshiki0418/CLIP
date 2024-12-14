@@ -4,6 +4,7 @@ from torch import nn
 
 class TextEncoder(nn.Module):
     def __init__(self, model_name: str) -> None:
+        super().__init__()
         config = AutoConfig.from_pretrained(model_name)
         self.model = FlaxAutoModel.from_config(config)
         self.target_token_idx = 0
