@@ -29,3 +29,4 @@ writer:
 
 device: cuda:0
 seed: 1234
+epochs: 20

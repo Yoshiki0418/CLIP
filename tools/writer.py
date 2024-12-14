@@ -5,19 +5,13 @@ class WandBMetricsWriter():
     def __init__(
         self,
         project_name: str,
-        config: dict,
         model_name: str = None,
     ) -> None:
         self.project_name = project_name
         self.name = model_name
 
-        # configがDictConfigなら辞書形式に変換する
-        if isinstance(config, DictConfig):
-            config_dict = OmegaConf.to_container(config, resolve=True)
-        else:
-            config_dict = config
 
-        wandb.init(project=project_name,entity="yoshi-ai", name=self.name, config=config_dict)
+        wandb.init(project=project_name,entity="yoshi-ai", name=self.name)
 
     def __call__(
             self, 
