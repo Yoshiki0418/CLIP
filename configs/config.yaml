@@ -1,0 +1,31 @@
+datasets:
+  artifact_dir: flickr8k/
+  dataset_name: flickr8k
+  val_split: 0.2
+  tokenizer_alias: bert-base-uncased
+  target_size: 224
+  max_length: 76
+  train_batch_size: 128
+  val_batch_size: 32
+  num_workers: 4   # T4:4, L4:8, A100:16
+
+model:
+  img_size: 224                                  # 画像のサイズ（例: 224）
+  patch_size: 32                                 # パッチサイズ（例: 32）
+  embed_dim: 512                                 # 埋め込み次元（例: 512）
+  num_layers: 12                                 # トランスフォーマーの層数（例: 12）
+  num_heads: 8                                   # アテンションヘッドの数（例: 8）
+  text_model_name: distilbert-base-uncased       # テキストエンコーダのモデル名
+  image_embedding_dims: 2048                     # 画像エンコーダ出力の埋め込み次元
+  text_embedding_dims: 768                       # テキストエンコーダ出力の埋め込み次元
+  projection_dims: 512                           # 射影ヘッドの出力次元（例: 512）
+  dropout: 0.1                                   # ドロップアウト率（例: 0.1）
+  dim_head: 4     
+
+writer:
+  project_name: CLIP
+  config: configs/config
+  model_name: CLIP_ViT_B32
+
+device: cuda:0
+seed: 1234
