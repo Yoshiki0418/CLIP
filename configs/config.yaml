@@ -24,7 +24,7 @@ model:
 
 writer:
   project_name: CLIP
-  config: /content/drive/MyDrive/Deep_Learning/CLIP/configs/config
+  config_path: /content/drive/MyDrive/Deep_Learning/CLIP/configs/config
   model_name: CLIP_ViT_B32
 
 device: cuda:0
