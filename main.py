@@ -61,6 +61,7 @@ def run(args: DictConfig):
     #            Model
     #------------------------------------
     model = CLIP_Module(**args.model)
+    model.to(args.device)
 
     #------------------------------------
     #          Optimizer
