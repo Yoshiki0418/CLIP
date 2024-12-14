@@ -80,7 +80,6 @@ def run(args: DictConfig):
     max_val_top_k_acc = 0.0
 
     writer = WandBMetricsWriter(project_name = f"{args.writer.project_name}",
-                                    config = args.writer.config_path,
                                     model_name = args.writer.name)
 
     for epoch in range(args.epochs):
