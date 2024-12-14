@@ -127,28 +127,28 @@ def run(args: DictConfig):
             optimizer.step()
 
         model.eval()
-        with torch.no_grad():
-            for batch in tqdm(val_dataloader, desc="Validation"):
-                images = batch["image"].to(args.device)
-                input_ids = batch["input_ids"].to(args.device)
-                attention_mask = batch["attention_mask"].to(args.device)
+        for batch in tqdm(val_dataloader, desc="Validation"):
+            images = batch["image"].to(args.device)
+            input_ids = batch["input_ids"].to(args.device)
+            attention_mask = batch["attention_mask"].to(args.device)
 
-                # 順伝播
+            # 順伝播
+            with torch.no_grad():
                 image_embeddings, text_embeddings = model({
                     "image": images,
                     "input_ids": input_ids,
                     "attention_mask": attention_mask,
                 })
 
-                # 損失計算
-                loss = criterion(image_embeddings, text_embeddings)
-                val_loss.append(loss.item())
+            # 損失計算
+            loss = criterion(image_embeddings, text_embeddings)
+            val_loss.append(loss.item())
 
-                similarity_matrix = torch.matmul(image_embeddings, text_embeddings.T)
-                labels = torch.arange(similarity_matrix.size(0)).to(similarity_matrix.device)
-                top_k_acc = compute_top_k_accuracy(similarity_matrix, labels, k=5)
-                val_top_k_acc.append(val_top_k_acc)
-                print("Now")
+            similarity_matrix = torch.matmul(image_embeddings, text_embeddings.T)
+            labels = torch.arange(similarity_matrix.size(0)).to(similarity_matrix.device)
+            top_k_acc = compute_top_k_accuracy(similarity_matrix, labels, k=5)
+            val_top_k_acc.append(val_top_k_acc)
+            print(val_top_k_acc)
 
         print(f"Epoch {epoch+1}/{args.epochs} | train loss: {np.mean(train_loss):.3f} | train top_k_acc: {np.mean(train_top_k_acc)} | val loss: {np.mean(val_loss):.3f} | val top_k_acc: {np.mean(val_top_k_acc)} ")
 
