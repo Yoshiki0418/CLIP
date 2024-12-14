@@ -64,12 +64,12 @@ class CLIP_Module(nn.Module):
         self.text_encoder = TextEncoder(model_name=text_model_name)
 
         self.image_projection = ProjectionHead(
-            embedding_dim=image_embedding_dims,
+            emb_dim=image_embedding_dims,
             projection_dim=projection_dims,
             dropout=dropout,
         )
         self.text_projection = ProjectionHead(
-            embedding_dim=text_embedding_dims,
+            emb_dim=text_embedding_dims,
             projection_dim=projection_dims,
             dropout=dropout,
         )
