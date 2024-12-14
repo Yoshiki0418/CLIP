@@ -149,7 +149,7 @@ def run(args: DictConfig):
                 top_k_acc = compute_top_k_accuracy(similarity_matrix, labels, k=5)
                 val_top_k_acc.append(val_top_k_acc)
 
-        print(f"Epoch {epoch+1}/{args.model.epochs} | train loss: {np.mean(train_loss):.3f} | train top_k_acc: {np.mean(train_top_k_acc)} | val loss: {np.mean(val_loss):.3f} | val top_k_acc: {np.mean(val_top_k_acc)} ")
+        print(f"Epoch {epoch+1}/{args.epochs} | train loss: {np.mean(train_loss):.3f} | train top_k_acc: {np.mean(train_top_k_acc)} | val loss: {np.mean(val_loss):.3f} | val top_k_acc: {np.mean(val_top_k_acc)} ")
 
         torch.save(model.state_dict(), os.path.join(logdir, "model_last.pt"))
 
