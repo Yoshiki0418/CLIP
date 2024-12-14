@@ -25,6 +25,7 @@ class MultiHead_Self_Attention(nn.Module):
         self.to_out = nn.Conv1d(hidden_dim, dim, 1)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
+        x = rearrange(x, 'b l c -> b c l')
         b, c, l = x.shape
         qkv = self.to_qkv(x).chunk(3, dim=1) # 線形変換
         q, k, v = [rearrange(t, "b (h d) l -> b h d l", h=self.heads) for t in qkv]
@@ -35,4 +36,5 @@ class MultiHead_Self_Attention(nn.Module):
         out = einsum("b h i j, b h d j -> b h i d", attn, v)
         out = rearrange(out, "b h l d -> b (h d) l", l=l)
         out = self.to_out(out)
+        out = rearrange(out, 'b c l -> b l c')
         return out
