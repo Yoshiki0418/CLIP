@@ -66,12 +66,12 @@ class CLIP_Module(nn.Module):
         self.image_projection = ProjectionHead(
             emb_dim=image_embedding_dims,
             projection_dim=projection_dims,
-            dropout=dropout,
+            drop_out=dropout,
         )
         self.text_projection = ProjectionHead(
             emb_dim=text_embedding_dims,
             projection_dim=projection_dims,
-            dropout=dropout,
+            drop_out=dropout,
         )
         
     def encode_text(self, input_ids, attention_mask):
