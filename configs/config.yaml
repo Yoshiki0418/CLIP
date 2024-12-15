@@ -11,7 +11,7 @@ datasets:
 
 model: # (ViT-B32)
   img_size: 224                                  # 画像のサイズ（例: 224）
-  patch_size: 32                                 # パッチサイズ（例: 32）
+  patch_size: 16                                 # パッチサイズ（例: 32）
   embed_dim: 512                                 # 埋め込み次元（例: 512）
   num_layers: 12                                 # トランスフォーマーの層数（例: 12）
   num_heads: 12                                  # アテンションヘッドの数（例: 8）
@@ -42,4 +42,4 @@ writer:
 
 device: cuda:0
 seed: 1234
-epochs: 50
+epochs: 200
