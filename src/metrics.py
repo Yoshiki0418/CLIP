@@ -12,3 +12,6 @@ def compute_top_k_accuracy(similarity_matrix, labels, k=5):
     correct = top_k.eq(labels.unsqueeze(1)).any(dim=-1)  # 上位kに正解が含まれるか
     accuracy = correct.float().mean().item()
     return accuracy
+
+def calc_acc(preds):
+    return 100. * sum(preds) / len(preds)

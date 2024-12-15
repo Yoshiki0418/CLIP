@@ -7,33 +7,33 @@ datasets:
   max_length: 76
   train_batch_size: 128
   val_batch_size: 32
-  num_workers: 8   # T4:4, L4:8, A100:16
+  num_workers: 4   # T4:4, L4:8, A100:16
 
-# model:(ViT-B32)
-#   img_size: 224                                  # 画像のサイズ（例: 224）
-#   patch_size: 32                                 # パッチサイズ（例: 32）
-#   embed_dim: 512                                 # 埋め込み次元（例: 512）
-#   num_layers: 12                                 # トランスフォーマーの層数（例: 12）
-#   num_heads: 12                                  # アテンションヘッドの数（例: 8）
-#   text_model_name: distilbert-base-uncased       # テキストエンコーダのモデル名
-#   image_embedding_dims: 512                     # 画像エンコーダ出力の埋め込み次元
-#   text_embedding_dims: 768                       # テキストエンコーダ出力の埋め込み次元
-#   projection_dims: 512                           # 射影ヘッドの出力次元（例: 512）
-#   dropout: 0.1                                   # ドロップアウト率（例: 0.1）
-#   dim_head: 4     
-
-model:
+model: # (ViT-B32)
   img_size: 224                                  # 画像のサイズ（例: 224）
-  patch_size: 8                                 # パッチサイズ（例: 32）
-  embed_dim: 1024                                # 埋め込み次元（例: 512）
-  num_layers: 24                                 # トランスフォーマーの層数（例: 12）
-  num_heads: 16                                 # アテンションヘッドの数（例: 8）
+  patch_size: 32                                 # パッチサイズ（例: 32）
+  embed_dim: 512                                 # 埋め込み次元（例: 512）
+  num_layers: 12                                 # トランスフォーマーの層数（例: 12）
+  num_heads: 12                                  # アテンションヘッドの数（例: 8）
   text_model_name: distilbert-base-uncased       # テキストエンコーダのモデル名
-  image_embedding_dims: 1024                     # 画像エンコーダ出力の埋め込み次元
+  image_embedding_dims: 512                     # 画像エンコーダ出力の埋め込み次元
   text_embedding_dims: 768                       # テキストエンコーダ出力の埋め込み次元
-  projection_dims: 1024                           # 射影ヘッドの出力次元（例: 512）
+  projection_dims: 512                           # 射影ヘッドの出力次元（例: 512）
   dropout: 0.1                                   # ドロップアウト率（例: 0.1）
-  dim_head: 4  
+  dim_head: 4     
+
+# model:
+#   img_size: 224                                  # 画像のサイズ（例: 224）
+#   patch_size: 8                                 # パッチサイズ（例: 32）
+#   embed_dim: 1024                                # 埋め込み次元（例: 512）
+#   num_layers: 24                                 # トランスフォーマーの層数（例: 12）
+#   num_heads: 16                                 # アテンションヘッドの数（例: 8）
+#   text_model_name: distilbert-base-uncased       # テキストエンコーダのモデル名
+#   image_embedding_dims: 1024                     # 画像エンコーダ出力の埋め込み次元
+#   text_embedding_dims: 768                       # テキストエンコーダ出力の埋め込み次元
+#   projection_dims: 1024                           # 射影ヘッドの出力次元（例: 512）
+#   dropout: 0.1                                   # ドロップアウト率（例: 0.1）
+#   dim_head: 4  
 
 writer:
   project_name: CLIP
