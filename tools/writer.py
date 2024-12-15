@@ -17,14 +17,18 @@ class WandBMetricsWriter():
             self, 
             epoch: int, 
             train_loss: float, 
+            train_acc: float,
             train_top_k_acc: float,
             val_loss: float,
+            val_acc: float,
             val_top_k_acc: float,
         ) -> None:
         wandb.log(
             {"train_loss": train_loss,
+             "train_acc": train_acc,
              "train_top_k_acc": train_top_k_acc,
              "val_loss": val_loss,
+             "val_acc": val_acc,
              "val_top_k_acc": val_top_k_acc,
              }, step=epoch)
 

@@ -66,11 +66,18 @@ def run(args: DictConfig):
     #------------------------------------
     #          Optimizer
     #------------------------------------
+    # optimizer = optim.AdamW([
+    #     {"params": model.image_encoder.parameters(), "lr": 1e-5},
+    #     {"params": model.text_encoder.parameters(), "lr": 1e-5},
+    #     {"params": model.image_projection.parameters(), "lr": 3e-4},
+    #     {"params": model.text_projection.parameters(), "lr": 3e-4},
+    # ], weight_decay=1e-2)
+
     optimizer = optim.AdamW([
-        {"params": model.image_encoder.parameters(), "lr": 1e-5},
-        {"params": model.text_encoder.parameters(), "lr": 1e-5},
-        {"params": model.image_projection.parameters(), "lr": 3e-4},
-        {"params": model.text_projection.parameters(), "lr": 3e-4},
+        {"params": model.image_encoder.parameters(), "lr": 5e-6},  # 画像エンコーダ
+        {"params": model.text_encoder.parameters(), "lr": 5e-6},  # テキストエンコーダ
+        {"params": model.image_projection.parameters(), "lr": 2e-4},  # 射影ヘッド（画像側）
+        {"params": model.text_projection.parameters(), "lr": 2e-4},  # 射影ヘッド（テキスト側）
     ], weight_decay=1e-2)
 
     #------------------------------------
@@ -86,7 +93,7 @@ def run(args: DictConfig):
     for epoch in range(args.epochs):
         print(f"Epoch {epoch+1}/{args.epochs}")
 
-        train_loss, val_loss, train_top_k_acc, val_top_k_acc = [], [], [], []
+        train_loss, val_loss, train_top_k_acc, val_top_k_acc, train_acc, val_acc = [], [], [], [], [], []
 
         model.train()
 
@@ -117,6 +124,8 @@ def run(args: DictConfig):
             labels = torch.arange(similarity_matrix.size(0)).to(similarity_matrix.device)
             top_k_acc = compute_top_k_accuracy(similarity_matrix, labels, k=5)
             train_top_k_acc.append(top_k_acc)
+            acc = compute_top_k_accuracy(similarity_matrix, labels, k=1)
+            train_acc.append(acc)
 
             optimizer.zero_grad()
 
@@ -148,8 +157,10 @@ def run(args: DictConfig):
             labels = torch.arange(similarity_matrix.size(0)).to(similarity_matrix.device)
             top_k_acc = compute_top_k_accuracy(similarity_matrix, labels, k=5)
             val_top_k_acc.append(top_k_acc)
+            acc = compute_top_k_accuracy(similarity_matrix, labels, k=1)
+            val_acc.append(acc)
 
-        print(f"Epoch {epoch+1}/{args.epochs} | train loss: {np.mean(train_loss):.3f} | train top_k_acc: {np.mean(train_top_k_acc)} | val loss: {np.mean(val_loss):.3f} | val top_k_acc: {np.mean(val_top_k_acc)} ")
+        print(f"Epoch {epoch+1}/{args.epochs} | train loss: {np.mean(train_loss):.3f} | train top_k_acc: {np.mean(train_top_k_acc)} | train acc: {np.mean(train_acc)} | val loss: {np.mean(val_loss):.3f} | val top_k_acc: {np.mean(val_top_k_acc)} | val acc: {np.mean(val_acc)}")
 
         torch.save(model.state_dict(), os.path.join(logdir, "model_last.pt"))
 
@@ -161,9 +172,11 @@ def run(args: DictConfig):
         writer(
             epoch = epoch,
             train_loss = np.mean(train_loss),
+            train_acc = np.mean(train_acc),
             train_top_k_acc = np.mean(train_top_k_acc),
             val_loss = np.mean(val_loss),
-            val_top_k_acc = np.mean(val_top_k_acc)
+            val_acc = np.mean(val_acc),
+            val_top_k_acc = np.mean(val_top_k_acc),
         )
 
 
