@@ -59,7 +59,7 @@ def run(args: DictConfig):
 
     # -----model-----
     model = CLIP_Module(**args.model).to(args.device)
-    model.load_state_dict(torch.load('/content/drive/MyDrive/Deep_Learning/CLIP/outputs/2024-12-15/06-24-11/model_best.pt',map_location=torch.device('cpu'))) 
+    model.load_state_dict(torch.load('/content/drive/MyDrive/Deep_Learning/CLIP/outputs/2024-12-15/13-01-06/model_best.pt',map_location=torch.device('cpu'))) 
 
     # Prompt ensembling
     labels = imagenette.info.features['label'].names
